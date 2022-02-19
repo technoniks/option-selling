@@ -1,0 +1,28 @@
+.AppHeader {
+  
+}
+.btn {
+  margin: 4px;
+}
+.text-right {
+  text-align: right;
+  font-weight: 500;
+}
+.profit{
+  font-size: 12px;
+    color: green;
+}
+.loss{
+  font-size: 12px;
+    color: red;
+}
+.profile {
+  font-weight: 500;
+}
+.bi {
+  font-size: 18px;
+  margin: 8px;
+}
+.filtered {
+  font-weight: 500;
+}

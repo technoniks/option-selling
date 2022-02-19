@@ -5,7 +5,7 @@ require('dotenv').config({path:'.env.local'})
 //------------Configuration-----------------
 const PREMIUM_HEALTH_RATIO  = 2.5 // CE !> 2PE or PE !> 2CE otherwise Exit position
 const EXPIRY                = 1 //0 == currentExpiry and 1 == next visa versa
-const NO_OF_LOTS            = 1 //ex. 1 of nifty == 1*50 qty
+const NO_OF_LOTS            = 1 //ex. 1 of nifty == 1*50 qty.
 const PROFIT_TARGET         = 1500
 const STOP_LOSS             = 500 * NO_OF_LOTS
 const MIN_BOOKED_SL         = 1600 * NO_OF_LOTS//1600 then minBookedSl=1600 & sl=500 then minProfit=minBookedSl-sl which is 1100

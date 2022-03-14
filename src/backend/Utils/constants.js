@@ -1,6 +1,6 @@
 const MESSAGES = {
   EXIT_POSITIONS:"Exit Positions",//
-  JUST_WAIT_AND_WATCH: "Just Wait ans Watch",
+  JUST_WAIT_AND_WATCH: "Just Wait and Watch",
   ENTRY_TAKEN: "Entry Taken",//
   NEED_TO_WAIT_FOR_ENTRY: "Need to wait for Entry",
   NOT_A_RIGHT_TIME_ENTRY: "Not a right time for Entry",

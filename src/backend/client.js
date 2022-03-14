@@ -17,9 +17,11 @@ const { logFormat, appendLog } = require('./Utils/utils')
 //   !d.existed && process.stdout.cursorTo(0);
 //   process.stdout.write(logFormat(e.data))
 // }
+// const SOCKET_URL = 'https://8768-183-87-47-69.ngrok.io';
+const SOCKET_URL ='http://127.0.0.1:8080';
 const { io } = require("socket.io-client");
-const socket = io('http://127.0.0.1:8080', {
-                reconnection: true, path: '/portfolio' 
+const socket = io(SOCKET_URL, {
+                reconnection: true//, path: '/portfolio' 
               });
 socket.on('connect', (socket) => {
   console.log('connected');

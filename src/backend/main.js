@@ -4,6 +4,8 @@ const util = require("./Utils/utils")
 const { AppWebsocket } = require("./WS/websocket")
 const { MESSAGES, ACTION } = require('./Utils/constants')
 const moment = require("moment")
+const {demo} = require('../demo')
+const SmartApi = require("smartapi-javascript/lib/smartapi-connect")
 
 class Main {
   constructor() {
@@ -12,7 +14,10 @@ class Main {
     this.last_exit_action = false
     this.app_ws = new AppWebsocket()
     this.broker_api = new BrokerAPI(
-      connected => connected && this.start()
+      connected => connected && 
+        this.broker_api.getInstruments( 
+          done => done && this.start()
+        )//demo(this.broker_api)
     )}
 
   start = () => {
@@ -22,9 +27,11 @@ class Main {
           if (connected) {
             this.getPositions((p) => {
               this.positions = util.formatPositions(p)
-              this.highestPnl = this.highestPnl && 
-                (this.positions.pnl > this.highestPnl) 
-                ? this.positions.pnl : this.highestPnl;
+              this.highestPnl = this.highestPnl 
+              ? (this.positions.pnl > this.highestPnl) 
+                ? this.positions.pnl 
+                : this.highestPnl
+              : this.positions.pnl;
                 
               if (this.positions.opened.length) {
                 if (!util.isScriptsHealthy(
@@ -62,7 +69,7 @@ class Main {
     }, config.LTP_TIME_LAP)
   }
   sendToClient(positions, msg) {
-    util.progressLog(util.logFormat(msg, positions))
+    util.progressLog(util.logFormat(msg))
     this.app_ws.io && this.app_ws.io.emit("message",util.wsMessage(positions, msg))
   }
   getPositions(cb) {
@@ -114,8 +121,10 @@ class Main {
       pnl: Number(this.positions.pnl).toFixed(0),
       closed: this.positions.closed.length,
       opened: this.positions.opened.map(p => p.sellavgprice+"|"+p.ltp),
-      existed: true
+      existed: true,
+      highestPnl: this.highestPnl
     }))
+    this.highestPnl = false;
     
     console.log("EXIT ===> POSITIONS")
     if (config.IS_PAPER_TRADING) {

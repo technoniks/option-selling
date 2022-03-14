@@ -3,18 +3,19 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 import './index.css';
-import App from './UI/Components/App/App';
+// import App from './UI/Components/App/App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from "react-redux";
-import store from './UI/Redux/stores/store'
+// import { Provider } from "react-redux";
+// import store from './UI/Redux/stores/store'
+import LearnApp from './UI/LearnApp';
 
 ReactDOM.render(
-  <Provider store={store}>
+  // <Provider store={store}>
     <React.StrictMode>
-      <App />
+      <LearnApp />
     </React.StrictMode>
-  </Provider>,
-  document.getElementById('root')
+  // </Provider>
+  ,document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

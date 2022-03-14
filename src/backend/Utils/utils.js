@@ -70,7 +70,7 @@ const filterTokenOnStrikeChange = (d, cb) => {
   cb(delete d.ltp && d)
 }
 
-const downloadFile = (content)=> {
+const downloadFile = (content, cb)=> {
   const index = filterOnParams({ // it return list
     filtered: content,
     filterParams:{
@@ -85,7 +85,7 @@ const downloadFile = (content)=> {
     }
   })
   content.unshift(index)
-  writeJsonFile(config.INSTRUMENT_FILE, content)
+  writeJsonFile(config.INSTRUMENT_FILE, content, (done) => cb(done))
 }
 const writeJsonFile = (filePath, content, cb) => {
   fs.writeFile(filePath, JSON.stringify(content), (err)=>{
@@ -277,7 +277,7 @@ const progressLog = (msg) => {
   process.stdout.write(msg)
 }
 
-const logFormat = (text) => moment().format("DMMMYY HH:mm:ss") + " " + text
+const logFormat = (text) => moment().format("DD-MMM-YY HH:mm:ss") + " " + text
 
 const appLog = (text) => console.log(logFormat(text));
 
@@ -348,9 +348,13 @@ const createPositionsObject = (filtered, ltps) =>
     }
 
   const calculateSL = (highestPnl = config.MIN_BOOKED_SL) => 
-    (highestPnl <= config.MIN_BOOKED_SL) 
-    ? (-1 * config.STOP_LOSS)
-    : (highestPnl - (highestPnl % config.STOP_LOSS))
+    highestPnl < (config.MIN_BOOKED_SL - config.MIN_STOP_LOSS)
+    ? (-1 * config.MIN_STOP_LOSS)
+    : (
+        highestPnl < config.MIN_BOOKED_SL 
+        ? (config.MIN_BOOKED_SL - config.MIN_STOP_LOSS)
+        : (highestPnl - (highestPnl % config.MIN_STOP_LOSS))
+      )
 
 module.exports = {
   filterOnParamsStrangle,

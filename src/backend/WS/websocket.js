@@ -8,7 +8,7 @@ const { Server } = require("socket.io");
 
 class AppWebsocket {
   constructor(){
-    this.io = new Server(server, { path: '/portfolio'})
+    this.io = new Server(server)//, { path: '/portfolio'})
     // this.io.of('/portfolio');
     // this.wss = new WebSocket.Server({ port: 8080, path:'/portfolio'})
     this.initWebsocket()

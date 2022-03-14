@@ -1,5 +1,6 @@
 const config  =  require('../Config/config');
 const utils =  require('../Utils/utils');
+const moment = require('moment')
 
 const https = require('https')
 let { SmartAPI, WebSocket } = require("smartapi-javascript");
@@ -32,7 +33,7 @@ const BrokerAPI = class BrokerAPI extends SmartAPI{
       })
   }
 
-  getInstruments(){
+  getInstruments(cb){
     https.get(config.INSTRUMENTS_URL,(res) => {
       let body = "";
       res.on("data", (chunk) => {
@@ -40,7 +41,7 @@ const BrokerAPI = class BrokerAPI extends SmartAPI{
       });
       res.on("end", () => {
           try {
-              utils.downloadFile(JSON.parse(body))
+              utils.downloadFile(JSON.parse(body), (done) => cb(done))
           } catch (error) {
               console.error(error.message);
           };
@@ -162,20 +163,24 @@ const BrokerAPI = class BrokerAPI extends SmartAPI{
   }
   
   getHistoricalData(params, callback){
-    let dt = new Date()
-    let toDate = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.toTimeString().slice(0,5)
-    dt = new Date(dt.setDate(dt.getDate()-3))
-    let fromDate = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.toTimeString().slice(0,5)
-    console.log("todate:",toDate," fromdate: ",fromDate);
+    const current = moment().date(moment().date()).format("YYYY-MM-DD HH:mm")
+    const start = moment().date(moment().date() - params.days).format("YYYY-MM-DD HH:mm")
+    console.log(current, " ", start );
+
+    // let dt = new Date()
+    // let toDate = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.toTimeString().slice(0,5)
+    // dt = new Date(dt.setDate(dt.getDate()-3))
+    // let fromDate = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate()+" "+dt.toTimeString().slice(0,5)
+    // console.log("todate:",toDate," fromdate: ",fromDate);
     this.getCandleData({
       "exchange": params.exch_seg,//"NSE",
       "symboltoken": params.token,
       "interval": "ONE_DAY",
-      "fromdate": fromDate,//"2021-02-10 09:00",
-      "todate": toDate,//"2021-02-10 09:20"
+      "fromdate": start,//"2021-02-10 09:00",
+      "todate": current,//"2021-02-10 09:20"
     }).then((data)=>{
       callback(data)
-    })
+    }).catch(err => utils.appLog("ERRU" + err))
   }
 }
 

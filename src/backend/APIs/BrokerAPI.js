@@ -46,9 +46,9 @@ const BrokerAPI = class BrokerAPI extends SmartAPI{
               console.error(error.message);
           };
       });
-  }).on("error", (error) => {
-      console.error(error.message);
-  });
+    }).on("error", (error) => {
+        console.error(error.message);
+    });
   }
 
   getLTPData(params, cb){

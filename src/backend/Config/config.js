@@ -5,7 +5,7 @@ require('dotenv').config({path:'.env.local'})
 //------------Configuration-----------------
 const IS_PAPER_TRADING      = true
 const PREMIUM_HEALTH_RATIO  = 2.5 // CE !> 2PE or PE !> 2CE otherwise Exit position
-const EXPIRY                = 0 //0 == currentExpiry and 1 == next visa versa
+const EXPIRY                = 1 //0 == currentExpiry and 1 == next visa versa
 const NO_OF_LOTS            = 1 //ex. 1 of nifty == 1*50 qty..
 const PROFIT_TARGET         = 5000
 const MIN_STOP_LOSS         = 1000 * NO_OF_LOTS
@@ -14,10 +14,10 @@ const WAIT_AFTER_SL         = 30 //in minutes
 const WAIT_AFTER_BOOKED     = 10 //in minutes
 
 const SEGMENTS              = ['NIFTY', 'BANKNIFTY']
-const SEGMENT               = SEGMENTS[1] //need to set
+const SEGMENT               = SEGMENTS[0] //need to set
 
 const TRADE_TYPES           = ["INTRADAY", "CARRYFORWARD"]
-const TRADE_TYPE            = TRADE_TYPES[1] //need to set
+const TRADE_TYPE            = TRADE_TYPES[0] //need to set
 
 const START_TIME            = { hour:9, minute:30}
 const ENTRY_LIMIT_TIME      = { hour:15, minute:15}//{ hour:14, minute:30}

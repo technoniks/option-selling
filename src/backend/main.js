@@ -14,10 +14,13 @@ class Main {
     this.last_exit_action = false
     this.app_ws = new AppWebsocket()
     this.broker_api = new BrokerAPI(
-      connected => connected && 
-        this.broker_api.getInstruments( 
-          done => done && this.start()
-        )//demo(this.broker_api)
+      connected => {
+        if (connected) {
+          this.broker_api.getInstruments( 
+            done => done && this.start()
+          )//demo(this.broker_api)
+        }
+      }
     )}
 
   start = () => {
@@ -28,10 +31,10 @@ class Main {
             this.getPositions((p) => {
               this.positions = util.formatPositions(p)
               this.highestPnl = this.highestPnl 
-              ? (this.positions.pnl > this.highestPnl) 
-                ? this.positions.pnl 
-                : this.highestPnl
-              : this.positions.pnl;
+                ? (this.positions.pnl > this.highestPnl) 
+                  ? this.positions.pnl 
+                  : this.highestPnl
+                : this.positions.pnl;
                 
               if (this.positions.opened.length) {
                 if (!util.isScriptsHealthy(

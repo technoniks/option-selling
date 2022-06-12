@@ -127,13 +127,14 @@ const findNearValue = (ltp)=>{
   console.log("index:",ltp.ltp,"|new strike: ",strike);
   return strike
 }
-
+//entry conditions
 const isTheRightTimeForEntry = () => 
   (moment().hour(config.START_TIME.hour).minute(config.START_TIME.minute) < moment().valueOf()) &&
-  (config.TRADE_TYPE === config.TRADE_TYPE 
+  (config.TRADE_TYPE === config.TRADE_TYPES[0]
     ? (moment().hour(config.ENTRY_LIMIT_TIME.hour).minute(config.ENTRY_LIMIT_TIME.minute) > moment().valueOf())
     : true)
 
+//exit conditions
 const isScriptsHealthy = (pnl, highestPnl, [pe, ce]) => 
   (pnl > calculateSL(highestPnl) && pnl < config.PROFIT_TARGET) && 
   (pe < (config.PREMIUM_HEALTH_RATIO*ce) && ce < (config.PREMIUM_HEALTH_RATIO * pe)) &&

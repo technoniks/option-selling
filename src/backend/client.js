@@ -18,7 +18,7 @@ const { logFormat, appendLog } = require('./Utils/utils')
 //   process.stdout.write(logFormat(e.data))
 // }
 // const SOCKET_URL = 'https://8768-183-87-47-69.ngrok.io';
-const SOCKET_URL ='http://127.0.0.1:8080';
+const SOCKET_URL ='http://127.0.0.1:8081';
 const { io } = require("socket.io-client");
 const socket = io(SOCKET_URL, {
                 reconnection: true//, path: '/portfolio' 

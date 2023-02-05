@@ -6,9 +6,10 @@ const https = require('https')
 let { SmartAPI, WebSocket } = require("smartapi-javascript");
 
 
-const BrokerAPI = class BrokerAPI extends SmartAPI{
+const AppBrokerAPI = class BrokerAPI extends SmartAPI{
   constructor(cb, tickReceiver){
     super({ api_key: config.API_KEY})
+    console.log(config.API_KEY);
     this.tickReceiver = tickReceiver
     this.initSmartAPI(cb)
     this.connected = false
@@ -16,7 +17,7 @@ const BrokerAPI = class BrokerAPI extends SmartAPI{
   }
 
   initSmartAPI = (cb)=>{
-    this.generateSession(config.CLIENT_ID, config.PASSWORD)
+    this.generateSession(config.CLIENT_ID, config.PASSWORD, config.TOTP)
       .then((res)=>{
         this.config = {
           feedToken: res["data"]["feedToken"],
@@ -184,4 +185,4 @@ const BrokerAPI = class BrokerAPI extends SmartAPI{
   }
 }
 
-module.exports = {BrokerAPI} 
+module.exports = { AppBrokerAPI } 

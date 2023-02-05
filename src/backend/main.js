@@ -1,5 +1,5 @@
 const config = require("./Config/config")
-const {BrokerAPI} = require('./APIs/BrokerAPI')
+const {AppBrokerAPI} = require('./APIs/AppBrokerAPI')
 const util = require("./Utils/utils")
 const { AppWebsocket } = require("./WS/websocket")
 const { MESSAGES, ACTION } = require('./Utils/constants')
@@ -13,7 +13,7 @@ class Main {
     this.wait_time = false
     this.last_exit_action = false
     this.app_ws = new AppWebsocket()
-    this.broker_api = new BrokerAPI(
+    this.broker_api = new AppBrokerAPI(
       connected => {
         if (connected) {
           this.broker_api.getInstruments( 

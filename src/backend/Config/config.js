@@ -33,6 +33,7 @@ const LTP_TIME_LAP         = 5000 //in millies
 const API_KEY              = process.env.API_KEY
 const CLIENT_ID            = process.env.CLIENT_ID
 const PASSWORD             = process.env.PASSWORD
+const TOTP                 = process.env.TOTP
 
 const POSITIONS_PATH       = "src/backend/DB/positions.json"
 
@@ -68,6 +69,7 @@ module.exports = {
   API_KEY,
   CLIENT_ID,
   PASSWORD,
+  TOTP,
   IS_PAPER_TRADING,
   POSITIONS_PATH,
   TRADE_TYPE,
